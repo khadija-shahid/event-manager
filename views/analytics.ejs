@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <title>Event Analytics</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Event Analytics</h1>
+        <p class="subtitle">Organiser Analytics Access - Sales and Revenue Information</p>
+        <p class="info-text">Analytics values are calculated dynamically from bookings and update automatically after each booking.</p>
+        
+        <div class="navigation-links">
+            <a href="/organiser" class="button secondary">Back to Organiser Home</a>
+            <a href="/" class="button secondary">Main Home Page</a>
+        </div>
+
+        <div class="analytics-summary">
+            <h2>Overall Summary</h2>
+            <div class="summary-stats">
+                <div class="stat-card">
+                    <h3>Total Revenue</h3>
+                    <p class="stat-value">£<%= totalRevenue.toFixed(2) %></p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Tickets Sold</h3>
+                    <p class="stat-value"><%= totalTicketsSold %></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="analytics-events">
+            <h2>Analytics Per Event</h2>
+            <% if (eventsWithAnalytics && eventsWithAnalytics.length > 0) { %>
+                <div class="analytics-table-container">
+                    <table class="analytics-table">
+                        <thead>
+                            <tr>
+                                <th>Event Title</th>
+                                <th>Event Date</th>
+                                <th>Tickets Sold (Full-Price)</th>
+                                <th>Tickets Sold (Concession)</th>
+                                <th>Total Tickets Sold</th>
+                                <th>Remaining (Full-Price)</th>
+                                <th>Remaining (Concession)</th>
+                                <th>Total Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% eventsWithAnalytics.forEach(function(item) { %>
+                                <tr>
+                                    <td><strong><%= item.event.event_title %></strong></td>
+                                    <td><%= item.event.event_date %></td>
+                                    <td><%= item.totalFullPriceSold %></td>
+                                    <td><%= item.totalConcessionSold %></td>
+                                    <td><strong><%= item.totalTicketsSold %></strong></td>
+                                    <td><%= item.remainingFullPrice %></td>
+                                    <td><%= item.remainingConcession %></td>
+                                    <td><strong>£<%= item.totalRevenue.toFixed(2) %></strong></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                        <tfoot>
+                            <tr class="totals-row">
+                                <td colspan="4"><strong>Overall Totals:</strong></td>
+                                <td><strong><%= totalTicketsSold %></strong></td>
+                                <td colspan="2"></td>
+                                <td><strong>£<%= totalRevenue.toFixed(2) %></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            <% } else { %>
+                <p class="no-events">No published events available for analytics.</p>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <title><%= event.event_title %></title>
+</head>
+<body>
+    <div class="container">
+        <h1>Event Details</h1>
+        <p class="subtitle">Attendee Event Information</p>
+        
+        <div class="navigation-links">
+            <a href="/attendee" class="button secondary">Back to Attendee Home</a>
+            <a href="/" class="button secondary">Main Home Page</a>
+        </div>
+
+        <div class="event-detail">
+            <div class="event-info">
+                <h2 class="event-title"><%= event.event_title %></h2>
+                <p><strong>Event Date:</strong> <%= event.event_date %></p>
+                <p><strong>Event Description:</strong> <%= event.event_description %></p>
+                
+                <div class="ticket-info">
+                    <h3>Ticket Information</h3>
+                    <p><strong>Full-Price Ticket Price:</strong> £<%= event.full_price_ticket_price %></p>
+                    <p><strong>Remaining Full-Price Tickets:</strong> <%= remainingFullPrice >= 0 ? remainingFullPrice : 0 %></p>
+                    <p><strong>Concession Ticket Price:</strong> £<%= event.concession_ticket_price %></p>
+                    <p><strong>Remaining Concession Tickets:</strong> <%= remainingConcession >= 0 ? remainingConcession : 0 %></p>
+                </div>
+
+                <% if (errorMessage) { %>
+                    <div class="error-message">
+                        <p><%= errorMessage %></p>
+                    </div>
+                <% } %>
+
+                <div class="booking-form-section">
+                    <h3>Make a Booking</h3>
+                    <form action="/attendee/event/<%= event.event_id %>/book" method="post" class="booking-form">
+                        <div class="form-group">
+                            <label for="attendee_name">Attendee Name:</label>
+                            <input type="text" id="attendee_name" name="attendee_name" required />
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="full_price_ticket_quantity">Number of Full-Price Tickets:</label>
+                                <input type="number" id="full_price_ticket_quantity" name="full_price_ticket_quantity" min="0" value="0" required />
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="concession_ticket_quantity">Number of Concession Tickets:</label>
+                                <input type="number" id="concession_ticket_quantity" name="concession_ticket_quantity" min="0" value="0" required />
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="button primary">Submit Booking</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
